@@ -112,46 +112,6 @@ class StudentManagerTest {
 
     }
 
-    @DisplayName("Repeat Student Creation Test 5 Times")
-    @RepeatedTest(value = 5,
-            name = "Repeating Student Creation Test {currentRepetition} od {totalRepetitions}")
-    public void shouldTestStudentCreationOnRepeatedly(){
-        studentManager.addStudent("Randika","Lakmal","0711596674");
-        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
-        Assertions.assertEquals(1,studentManager.getAllStudents().size());
-
-    }
-
-    @DisplayName("Student Creation Using Value Source")
-    @ParameterizedTest
-    @ValueSource(strings = {"0123456789","0123456789","0123456789"})
-    public void shouldTestStudentCreationUsingValueSource(String phoneNumber){
-        studentManager.addStudent("Randika","Lakmal",phoneNumber);
-        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
-        Assertions.assertEquals(1,studentManager.getAllStudents().size());
-
-    }
-
-    @DisplayName("CSV Source Case - Phone Number should match the required Format")
-    @ParameterizedTest
-    @CsvSource({"0123456789","0123456789","0123456789"})
-    public void shouldTestStudentCreationUsingCSVSource(String phoneNumber){
-        studentManager.addStudent("Randika","Lakmal",phoneNumber);
-        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
-        Assertions.assertEquals(1,studentManager.getAllStudents().size());
-
-    }
-
-    @DisplayName("CSV File Source Case - Phone Number should match the required Format")
-    @ParameterizedTest
-    @CsvFileSource(resources = "/data.csv")
-    public void shouldTestStudentCreationUsingCSVFileSource(String phoneNumber){
-        studentManager.addStudent("Randika","Lakmal",phoneNumber);
-        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
-        Assertions.assertEquals(1,studentManager.getAllStudents().size());
-
-    }
-
     @DisplayName("Method Source Case - Phone Number should match the required Format")
     @ParameterizedTest
     @MethodSource("phoneNumberList")
@@ -164,6 +124,53 @@ class StudentManagerTest {
 
     public static List<String> phoneNumberList(){
         return Arrays.asList("0123456789","0123456789","0123456789");
+    }
+
+    @Nested
+    class RepeatedNestedTest{
+
+        @DisplayName("Repeat Student Creation Test 5 Times")
+        @RepeatedTest(value = 5,
+                name = "Repeating Student Creation Test {currentRepetition} od {totalRepetitions}")
+        public void shouldTestStudentCreationOnRepeatedly(){
+            studentManager.addStudent("Randika","Lakmal","0711596674");
+            Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+            Assertions.assertEquals(1,studentManager.getAllStudents().size());
+
+        }
+    }
+
+    @Nested
+    class ParameterizedNestedTest{
+        @DisplayName("Student Creation Using Value Source")
+        @ParameterizedTest
+        @ValueSource(strings = {"0123456789","0123456789","0123456789"})
+        public void shouldTestStudentCreationUsingValueSource(String phoneNumber){
+            studentManager.addStudent("Randika","Lakmal",phoneNumber);
+            Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+            Assertions.assertEquals(1,studentManager.getAllStudents().size());
+
+        }
+
+        @DisplayName("CSV Source Case - Phone Number should match the required Format")
+        @ParameterizedTest
+        @CsvSource({"0123456789","0123456789","0123456789"})
+        public void shouldTestStudentCreationUsingCSVSource(String phoneNumber){
+            studentManager.addStudent("Randika","Lakmal",phoneNumber);
+            Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+            Assertions.assertEquals(1,studentManager.getAllStudents().size());
+
+        }
+
+        @DisplayName("CSV File Source Case - Phone Number should match the required Format")
+        @ParameterizedTest
+        @CsvFileSource(resources = "/data.csv")
+        public void shouldTestStudentCreationUsingCSVFileSource(String phoneNumber){
+            studentManager.addStudent("Randika","Lakmal",phoneNumber);
+            Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+            Assertions.assertEquals(1,studentManager.getAllStudents().size());
+
+        }
     }
 
 }
