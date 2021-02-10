@@ -66,7 +66,7 @@ class StudentManagerTest {
 
 
     @Test
-    @DisplayName("Should Create Contact Only on MAC OS")
+    @DisplayName("Should Create Student Only on MAC OS")
     @EnabledOnOs(value = OS.MAC,disabledReason = "Enabled only on MAC OS")
     public void shouldCreateContactOnlyOnMac(){
         studentManager.addStudent("Randika","Lakmal","0711596674");
@@ -80,7 +80,7 @@ class StudentManagerTest {
     }
 
     @Test
-    @DisplayName("Should Not Create Contact on WINDOWS OS")
+    @DisplayName("Should Not Create Student on WINDOWS OS")
     @DisabledOnOs(value = OS.WINDOWS, disabledReason = "Disabled on WINDOWS OS")
     public void shouldNotCreateContactOnlyOnWindows(){
         studentManager.addStudent("Randika","Lakmal","0711596674");
@@ -95,7 +95,7 @@ class StudentManagerTest {
 
 
     @Test
-    @DisplayName("Test Contact Creation on Developer Machine")
+    @DisplayName("Test Student Creation on Developer Machine")
     public void shouldTestContactCreationOnDEV(){
         Assumptions.assumeTrue("DEV".equals(System.getProperty("ENV")));
         studentManager.addStudent("Randika","Lakmal","0711596674");
@@ -103,4 +103,15 @@ class StudentManagerTest {
         Assertions.assertEquals(1,studentManager.getAllStudents().size());
 
     }
+
+    @DisplayName("Repeat Student Creation Test 5 Times")
+    @RepeatedTest(value = 5,
+            name = "Repeating Student Creation Test {currentRepetition} od {totalRepetitions}")
+    public void shouldTestContactCreationOnRepeatedly(){
+        studentManager.addStudent("Randika","Lakmal","0711596674");
+        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+        Assertions.assertEquals(1,studentManager.getAllStudents().size());
+
+    }
+
 }
