@@ -1,16 +1,25 @@
 package com.randikalakmal.Junit5;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StudentManagerTest {
 
+    StudentManager studentManager;
+
+    @BeforeAll
+    public void setupAll(){
+        System.out.println("Should print before All Tests");
+    }
+
+    @BeforeEach
+    public void setup(){
+        studentManager= new StudentManager();
+    }
 
     @Test
     @DisplayName("Should Create Contact")
     public void shouldCreateStudent() {
-        StudentManager studentManager = new StudentManager();
         studentManager.addStudent("Randika", "Lakmal", "0123456789");
         Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
         Assertions.assertEquals(1, studentManager.getAllStudents().size());
@@ -23,7 +32,6 @@ class StudentManagerTest {
     @Test
     @DisplayName("Should Not Create When First Name is Null")
     public void shouldThrowRuntimeExceptionWhenFirstNameIsNull(){
-        StudentManager studentManager = new StudentManager();
         Assertions.assertThrows(RuntimeException.class,()->{
             studentManager.addStudent(null,"Lakmal","0711596674");
         });
@@ -31,7 +39,6 @@ class StudentManagerTest {
     @Test
     @DisplayName("Should Not Create When Last Name is Null")
     public void shouldThrowRuntimeExceptionWhenLastNameIsNull(){
-        StudentManager studentManager = new StudentManager();
         Assertions.assertThrows(RuntimeException.class,()->{
             studentManager.addStudent("Randika",null,"0711596674");
         });
@@ -39,10 +46,19 @@ class StudentManagerTest {
     @Test
     @DisplayName("Should Not Create When Phone Number is Null")
     public void shouldThrowRuntimeExceptionWhenPhoneNumberIsNull(){
-        StudentManager studentManager = new StudentManager();
         Assertions.assertThrows(RuntimeException.class,()->{
             studentManager.addStudent("Randika","Lakmal",null);
         });
+    }
+
+    @AfterEach
+    public void tearDown(){
+        System.out.println("Should Execute After Each Test");
+    }
+
+    @AfterAll
+    public void tearDownAll(){
+        System.out.println("Should Executed at the end of the Test");
     }
 
 
