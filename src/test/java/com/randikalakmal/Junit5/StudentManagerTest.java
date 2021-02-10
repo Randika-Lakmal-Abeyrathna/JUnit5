@@ -7,7 +7,11 @@ import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StudentManagerTest {
@@ -147,4 +151,19 @@ class StudentManagerTest {
         Assertions.assertEquals(1,studentManager.getAllStudents().size());
 
     }
+
+    @DisplayName("Method Source Case - Phone Number should match the required Format")
+    @ParameterizedTest
+    @MethodSource("phoneNumberList")
+    public void shouldTestStudentCreationUsingMethodSource(String phoneNumber){
+        studentManager.addStudent("Randika","Lakmal",phoneNumber);
+        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+        Assertions.assertEquals(1,studentManager.getAllStudents().size());
+
+    }
+
+    public static List<String> phoneNumberList(){
+        return Arrays.asList("0123456789","0123456789","0123456789");
+    }
+
 }
