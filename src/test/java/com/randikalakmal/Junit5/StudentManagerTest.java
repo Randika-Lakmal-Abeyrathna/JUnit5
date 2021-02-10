@@ -1,6 +1,9 @@
 package com.randikalakmal.Junit5;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StudentManagerTest {
@@ -61,6 +64,34 @@ class StudentManagerTest {
         System.out.println("Should Executed at the end of the Test");
     }
 
+
+    @Test
+    @DisplayName("Should Create Contact Only on MAC OS")
+    @EnabledOnOs(value = OS.MAC,disabledReason = "Enabled only on MAC OS")
+    public void shouldCreateContactOnlyOnMac(){
+        studentManager.addStudent("Randika","Lakmal","0711596674");
+        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+        Assertions.assertEquals(1,studentManager.getAllStudents().size());
+        Assertions.assertTrue(studentManager.getAllStudents().stream()
+                .anyMatch(student -> student.getFirstName().equals("Randika")&&
+                        student.getLastName().equals("Lakmal") &&
+                        student.getPhoneNumber().equals("0711596674")));
+
+    }
+
+    @Test
+    @DisplayName("Should Not Create Contact on WINDOWS OS")
+    @DisabledOnOs(value = OS.WINDOWS, disabledReason = "Disabled on WINDOWS OS")
+    public void shouldNotCreateContactOnlyOnWindows(){
+        studentManager.addStudent("Randika","Lakmal","0711596674");
+        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+        Assertions.assertEquals(1,studentManager.getAllStudents().size());
+        Assertions.assertTrue(studentManager.getAllStudents().stream()
+                .anyMatch(student -> student.getFirstName().equals("Randika")&&
+                        student.getLastName().equals("Lakmal") &&
+                        student.getPhoneNumber().equals("0711596674")));
+
+    }
 
 
 }
