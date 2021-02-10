@@ -94,4 +94,13 @@ class StudentManagerTest {
     }
 
 
+    @Test
+    @DisplayName("Test Contact Creation on Developer Machine")
+    public void shouldTestContactCreationOnDEV(){
+        Assumptions.assumeTrue("DEV".equals(System.getProperty("ENV")));
+        studentManager.addStudent("Randika","Lakmal","0711596674");
+        Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
+        Assertions.assertEquals(1,studentManager.getAllStudents().size());
+
+    }
 }
