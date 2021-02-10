@@ -1,10 +1,11 @@
 package com.randikalakmal.Junit5;
 
 import java.sql.Struct;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class studentManager {
+public class StudentManager {
 
     Map<String,Student> studentList = new ConcurrentHashMap<>();
 
@@ -13,6 +14,10 @@ public class studentManager {
         validateStudent(student);
         checkIfStudentAlreadyExist(student);
         studentList.put(generateKey(student),student);
+    }
+
+    public Collection<Student> getAllStudents(){
+        return studentList.values();
     }
 
     private void validateStudent(Student student){

@@ -44,8 +44,8 @@ public class Student {
             throw new RuntimeException("Phone Number Should be 10 Digits long");
         }
 
-        if (this.phoneNumber.matches("\\d+")){
-            throw new RuntimeException("Phone Number Contains only digits");
+        if (!this.phoneNumber.matches("\\d+")) {
+            throw new RuntimeException("Phone Number Contain only digits");
         }
 
         if(!this.phoneNumber.startsWith("0")){
