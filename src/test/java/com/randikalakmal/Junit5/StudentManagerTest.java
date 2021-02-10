@@ -18,7 +18,7 @@ class StudentManagerTest {
     }
 
     @Test
-    @DisplayName("Should Create Contact")
+    @DisplayName("Should Create Student")
     public void shouldCreateStudent() {
         studentManager.addStudent("Randika", "Lakmal", "0123456789");
         Assertions.assertFalse(studentManager.getAllStudents().isEmpty());
